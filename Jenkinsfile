@@ -16,7 +16,7 @@ pipeline {
         }
         stage('creatingfile') {
             steps {
-                sh 'touch text -$BUILD_ID'
+                sh 'touch "text -$BUILD_ID"'
                 // Add your deployment commands here
             }
         }
