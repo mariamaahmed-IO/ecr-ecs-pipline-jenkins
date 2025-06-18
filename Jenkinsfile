@@ -27,12 +27,13 @@ pipeline {
                 sh 'docker tag webapp-repo:latest \
                 173036476311.dkr.ecr.us-east-1.amazonaws.com/webapp-repo:latest'
                  sh 'docker tag webapp-repo:latest \
-                173036476311.dkr.ecr.us-east-1.amazonaws.com/webapp-repo:v1.${BUILD_NUMBER}'
+                173036476311.dkr.ecr.us-east-1.amazonaws.com/webapp-repo:v1.$BUILD_NUMBER'
             }
         }
         stage('pushImage') {
             steps {
                 sh 'docker push 173036476311.dkr.ecr.us-east-1.amazonaws.com/webapp-repo:latest'
+                sh 'docker push 173036476311.dkr.ecr.us-east-1.amazonaws.com/webapp-repo:v1.$BUILD_NUMBER'
                 sh 'docker ps'
                 // Add your deployment commands here
             }
