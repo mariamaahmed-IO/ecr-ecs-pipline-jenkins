@@ -9,15 +9,28 @@ pipeline {
                 //code analysis commands
             }
         }
+        stage('Dockerlogin') {
+            steps {
+                sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin \
+                173036476311.dkr.ecr.us-east-1.amazonaws.com'
+            
+            }
+        }
         stage('DockerImagebuild') {
             steps {
-                sh 'docker -v'
+                sh 'docker build -t webapp-repo .'
                 // Add your test commands here
+            }
+        }
+        stage('Dockertag') {
+            steps {
+                sh 'docker tag webapp-repo:latest \
+                173036476311.dkr.ecr.us-east-1.amazonaws.com/webapp-repo:latest'
             }
         }
         stage('pushImage') {
             steps {
-                sh 'touch "text -$BUILD_ID"'
+                sh 'docker push 173036476311.dkr.ecr.us-east-1.amazonaws.com/webapp-repo:latest'
                 sh 'docker ps'
                 // Add your deployment commands here
             }
