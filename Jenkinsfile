@@ -5,6 +5,7 @@ pipeline {
         stage('clone') {
             steps {
                 sh 'echo "Cloning repository..."'
+                sh 'uname -r'
                 // Add your clone commands here
             }
         }
