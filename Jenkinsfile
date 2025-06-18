@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sh 'docker push 173036476311.dkr.ecr.us-east-1.amazonaws.com/webapp-repo:latest'
                 sh 'docker push 173036476311.dkr.ecr.us-east-1.amazonaws.com/webapp-repo:v1.$BUILD_NUMBER'
-                sh 'docker ps'
+               
                 // Add your deployment commands here
             }
         }
