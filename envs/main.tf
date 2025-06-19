@@ -32,10 +32,10 @@ module "ecr" {
 
 # 🪣 S3 for Pipeline Artifacts
 module "s3" {
-  source = "../modules/s3"
-  bucket_name = "WebAppbucket"
+  source      = "../modules/s3"
+  bucket_name = var.bucket_name
   tags = {
-    Project = "MyApp"
+    Project = var.name
     Environment = "dev"
   }
 }
@@ -83,7 +83,7 @@ module "ecs" {
 
 # 🔁 CI/CD Pipeline
 module "codepipeline" {
-  source               = "../modules/codebuild_codepipline"
+  source               = "../modules/codebuild_codepipeline"
   build_project_name   = var.build_project_name
   pipeline_name        = var.pipeline_name
   aws_region           = var.aws_region

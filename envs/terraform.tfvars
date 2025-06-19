@@ -34,3 +34,6 @@ build_project_name       = "webapp-build"
 
 # Load Balancer
 alb_name = "webapp-alb"
+
+#S3
+ bucket_name = "WebAppbucket"

@@ -135,11 +135,16 @@ variable "memory" {
   type        = string
 }
 variable "ecs_task_execution_role_name" {
-  type        = map(string)
+  type        = string
   description = "Name of ECS task execution role"
 }
 
 variable "codebuild_role_name" {
-  type        = map(string)
+  type        = string
   description = "Name of CodeBuild IAM role"
+}
+variable "bucket_name" {
+  description = "The name of the S3 bucket"
+  type        = string
+  
 }

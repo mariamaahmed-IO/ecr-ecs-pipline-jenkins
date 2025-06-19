@@ -32,7 +32,7 @@ resource "aws_s3_bucket_public_access_block" "artifact" {
   restrict_public_buckets = true
 }
 resource "aws_iam_policy" "terraform_s3_backend" {
-  name        = "TerraformS3BackendPolicy"
+  name        = "TerraformS3BackendPolicy-${var.bucket_name}"
   description = "Allow Terraform to access S3 bucket for state"
   policy      = jsonencode({
     Version = "2012-10-17",
@@ -46,13 +46,32 @@ resource "aws_iam_policy" "terraform_s3_backend" {
           "s3:ListBucket"
         ],
         Resource = [
-          "arn:aws:s3:::mybucketweek7maa",
-          "arn:aws:s3:::mybucketweek7maa/*"
+          "${aws_s3_bucket.artifact.arn}",
+          "${aws_s3_bucket.artifact.arn}/*"
         ]
       }
     ]
   })
 }
+resource "aws_iam_role" "terraform_role" {
+  name = "terraform-role-${var.bucket_name}"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        },
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+
+  tags = var.tags
+}
+
 resource "aws_iam_role_policy_attachment" "attach_s3_backend_policy" {
   role       = aws_iam_role.terraform_role.name
   policy_arn = aws_iam_policy.terraform_s3_backend.arn
