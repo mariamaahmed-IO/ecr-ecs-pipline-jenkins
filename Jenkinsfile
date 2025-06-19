@@ -38,6 +38,7 @@ pipeline {
             steps {
                 sh 'docker push $ECR_IMAGE_REPOSITORY:latest'
                 sh 'docker push $ECR_IMAGE_REPOSITORY:v1.$BUILD_NUMBER'
+                sh 'docker images'
 
                 // Add your deployment commands here
             }
